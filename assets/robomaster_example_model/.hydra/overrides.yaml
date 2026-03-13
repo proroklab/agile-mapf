@@ -1,0 +1,7 @@
+- dataset.fpath=assets/data/v0.1.7
+- device=cuda:3
+- wandb=true
+- num_epochs=10000
+- length_past_locs=3
+- dataset.num_rotation=16
+- model.dim_hidden=64

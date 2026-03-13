@@ -1,0 +1,6 @@
+dim_hidden: 64
+dim_output: 4
+dim_workspace: 2
+length_future_locs: 0
+length_past_locs: 3
+num_mid_layers: 1

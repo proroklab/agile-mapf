@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+APP_BIN="$ROOT_DIR/visualizer/bin/visualizer.app/Contents/MacOS/visualizer"
+
+if [[ "$(uname -s)" != "Darwin" ]]; then
+  echo "viz is macOS-only: it launches visualizer.app from the repository root." >&2
+  echo "On non-macOS platforms, use the visualizer's platform-specific openFrameworks build output directly if available." >&2
+  exit 1
+fi
+
+if [[ ! -x "$APP_BIN" ]]; then
+  echo "visualizer binary is missing: $APP_BIN" >&2
+  echo "Build it first with: (cd \"$ROOT_DIR/visualizer\" && make -j4)" >&2
+  exit 1
+fi
+
+if [[ $# -lt 1 ]]; then
+  echo "usage: $0 <solution-file>" >&2
+  exit 1
+fi
+
+exec "$APP_BIN" "$@"

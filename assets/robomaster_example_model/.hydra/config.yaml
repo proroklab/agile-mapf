@@ -1,0 +1,36 @@
+project: uncertainty
+wandb: true
+num_epochs: 10000
+seed: 42
+device: cuda:3
+length_past_locs: 3
+length_future_locs: 0
+save_freq: 100
+dataset:
+  _target_: uncertainty.data.SeqActionDatasetAugmented
+  device: ${device}
+  length_past_locs: ${length_past_locs}
+  length_future_locs: ${length_future_locs}
+  num_rotation: 16
+  fpath: assets/data/v0.1.7
+model:
+  _target_: uncertainty.model.GaussianMLP
+  length_past_locs: ${length_past_locs}
+  length_future_locs: ${length_future_locs}
+  dim_workspace: 2
+  dim_hidden: 64
+criterion:
+  _target_: torch.nn.GaussianNLLLoss
+dataset_split:
+  _target_: torch.utils.data.random_split
+  lengths:
+  - 0.7
+  - 0.2
+  - 0.1
+dataloader:
+  _target_: torch.utils.data.DataLoader
+  batch_size: 256
+  shuffle: true
+optimizer:
+  _target_: torch.optim.Adam
+  lr: 0.001
