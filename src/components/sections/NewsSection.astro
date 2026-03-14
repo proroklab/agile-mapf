@@ -1,0 +1,43 @@
+---
+import type { NewsSectionContent } from "../../types/site";
+
+interface Props {
+  id: NewsSectionContent["id"];
+  title: NewsSectionContent["title"];
+  items: NewsSectionContent["items"];
+}
+
+const { id, title, items } = Astro.props;
+---
+
+<section id={id} class="section container">
+  <div class="section-head">
+    <h2>{title}</h2>
+  </div>
+  <ul class="news-list">
+    {
+      items.map((newsItem) => (
+        <li class="news-item">
+          <time datetime={newsItem.date}>{newsItem.date}</time>
+          <div class="news-content">
+            <span class="news-text">{newsItem.text}</span>
+            {newsItem.url && (
+              <a
+                class="news-link-icon"
+                href={newsItem.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open news link: ${newsItem.text}`}
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M4 12L12 4" />
+                  <path d="M6 4H12V10" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

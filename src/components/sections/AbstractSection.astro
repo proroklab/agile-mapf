@@ -1,0 +1,22 @@
+---
+import type { AbstractSectionContent } from "../../types/site";
+
+interface Props {
+  id: AbstractSectionContent["id"];
+  title: AbstractSectionContent["title"];
+  html: string;
+}
+
+const { id, title, html } = Astro.props;
+---
+
+<section id={id} class="section section-abstract-bridge">
+  <div class="container">
+    <div class="paper-abstract">
+      <div class="section-head">
+        <h2>{title}</h2>
+      </div>
+      <div set:html={html} />
+    </div>
+  </div>
+</section>

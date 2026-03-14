@@ -1,0 +1,85 @@
+---
+import { getEntry } from "astro:content";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import HeroSection from "../components/HeroSection.astro";
+import AbstractSection from "../components/sections/AbstractSection.astro";
+import NewsSection from "../components/sections/NewsSection.astro";
+import MainVideoSection from "../components/sections/MainVideoSection.astro";
+import MethodSection from "../components/sections/MethodSection.astro";
+import MediaGallerySection from "../components/sections/MediaGallerySection.astro";
+import CitationSection from "../components/sections/CitationSection.astro";
+import ContactSection from "../components/sections/ContactSection.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { toYouTubeEmbedUrl } from "../lib/youtube";
+
+const siteEntry = await getEntry("site", "site");
+if (!siteEntry) {
+  throw new Error("Missing content entry: src/content/site.yaml");
+}
+
+const siteContent = siteEntry.data;
+const markdownProcessor = await createMarkdownProcessor();
+const abstractSectionHtml = (await markdownProcessor.render(siteContent.sections.abstract.body)).code;
+
+const youtubeCtaUrl = siteContent.hero.ctas.find((cta) => cta.label.toLowerCase() === "youtube")?.href;
+const mainVideoEmbedUrl = toYouTubeEmbedUrl(siteContent.sections.mainVideo?.url ?? youtubeCtaUrl);
+---
+
+<BaseLayout
+  title={siteContent.pageTitle}
+  description={siteContent.seo.description}
+  ogImage={siteContent.seo.ogImage}
+  ogType={siteContent.seo.ogType}
+  twitterCard={siteContent.seo.twitterCard}
+>
+  <HeroSection hero={siteContent.hero} />
+
+  <main>
+    <AbstractSection
+      id={siteContent.sections.abstract.id}
+      title={siteContent.sections.abstract.title}
+      html={abstractSectionHtml}
+    />
+
+    <NewsSection
+      id={siteContent.sections.news.id}
+      title={siteContent.sections.news.title}
+      items={siteContent.sections.news.items}
+    />
+
+    {
+      mainVideoEmbedUrl && (
+        <MainVideoSection
+          id={siteContent.sections.mainVideo.id}
+          title={siteContent.sections.mainVideo.title}
+          embedUrl={mainVideoEmbedUrl}
+        />
+      )
+    }
+
+    <MethodSection
+      id={siteContent.sections.method.id}
+      title={siteContent.sections.method.title}
+      video={siteContent.sections.method.video}
+    />
+
+    <MediaGallerySection
+      id={siteContent.sections.videos.id}
+      title={siteContent.sections.videos.title}
+      items={siteContent.sections.videos.items}
+    />
+
+    <CitationSection
+      id={siteContent.sections.citation.id}
+      title={siteContent.sections.citation.title}
+      bibtex={siteContent.sections.citation.bibtex}
+    />
+
+    <ContactSection
+      id={siteContent.sections.contact.id}
+      title={siteContent.sections.contact.title}
+      prefix={siteContent.sections.contact.prefix}
+      emails={siteContent.sections.contact.emails}
+    />
+  </main>
+</BaseLayout>

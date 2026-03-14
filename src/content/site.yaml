@@ -1,0 +1,151 @@
+pageTitle: "Concrete Multi-Agent Path Planning Enabling Kinodynamically Aggressive Maneuvers"
+seo:
+  description: "Concrete planning bridges continuous robot dynamics and scalable discrete search to deliver aggressive and reliable multi-robot coordination in dense real-world deployments."
+  ogImage: "/images/40robots_1.jpg"
+  ogType: "website"
+  twitterCard: "summary_large_image"
+
+hero:
+  title: "Concrete Multi-Agent Path Planning Enabling Kinodynamically Aggressive Maneuvers"
+  venue: "Published in npj Robotics (2026)"
+  authors:
+    - name: "Keisuke Okumura"
+      marks: "1,2,*,†"
+      url: "https://kei18.github.io/"
+    - name: "Guang Yang"
+      marks: "1,†"
+      url: "https://scholar.google.com/citations?user=Nw340R8AAAAJ&hl=en"
+    - name: "Zhan Gao"
+      marks: "1"
+      url: "https://scholar.google.com/citations?user=4BTN9dIAAAAJ"
+    - name: "Heedo Woo"
+      marks: "1"
+      url: "https://scholar.google.com/citations?user=9fIl8wIAAAAJ"
+    - name: "Amanda Prorok"
+      marks: "1,*"
+      url: "https://www.cst.cam.ac.uk/people/asp45"
+  affiliations:
+    - "1. University of Cambridge, UK"
+    - "2. National Institute of Advanced Industrial Science and Technology (AIST), Japan"
+  notes:
+    - "† Equal contribution"
+    - "* Corresponding authors (see Contact section)"
+  ctas:
+    - label: "Paper"
+      href: "https://doi.org/10.1038/s44182-026-00083-2"
+      style: "ghost"
+    - label: "YouTube"
+      href: ""
+      style: "ghost"
+    - label: "Code"
+      href: "https://github.com/proroklab/agile-mapf"
+      style: "ghost"
+
+sections:
+  abstract:
+    id: "overview"
+    title: "Abstract"
+    body: |
+      Coordinated trajectory planning is essential for multi-robot applications, ranging from factory automation to entertainment.
+      The main challenge is providing long-term coordination guarantees, such as freedom from collisions, deadlocks, and livelocks, as well as kinodynamic agility, especially in densely populated environments.
+      Although continuous optimization provides agility, it is computationally expensive.
+      In contrast, discrete search is scalable but lacks physical realism for robot execution.
+      This study introduces _concrete_ planning, a hybrid approach that captures real-world *con*tinuous dynamics while maintaining scalable guaranteed planning via dis*crete* search.
+      We integrate recent advances in robot dynamics learning, optimal control, and anytime complete planning into a modular framework.
+      The framework is deployed with 40 robots, including 20 aerial, 8 ground, and 12 obstacle robots, operating in a compact laboratory space.
+      Despite the dense and time-varying setup, the robots achieve consecutive navigation missions on-demand, while executing aggressive maneuvers that substantially reduce task completion time.
+
+  news:
+    id: "news"
+    title: "News"
+    items:
+      - date: "2026-04-01"
+        text: "The paper has been published in npj Robotics."
+        url: "https://www.nature.com/npjrobot/"
+      - date: "2025-10-26"
+        text: "Featured on Fantástico (Brazil)."
+        url: "https://g1.globo.com/fantastico/video/mentes-digitais-professora-brasileira-lidera-pesquisas-de-inteligencia-coletiva-no-reino-unido-14044982.ghtml"
+      - date: "2025-03-15"
+        text: "Featured on BBC Click (UK)."
+        url: "http://bbc.co.uk/iplayer/episode/m0029673/click-mwc-smart-phones-get-smarter"
+
+  method:
+    id: "method"
+    title: "Method"
+    video:
+      src: "/media/methodology.mp4"
+      title: "Method video"
+
+  mainVideo:
+    id: "main-video"
+    title: "Main Video"
+
+  videos:
+    id: "videos"
+    title: "Gallery"
+    items:
+      - type: "image"
+        src: "/images/40robots_1.jpg"
+        title: "40 robots in a compact workspace"
+      - type: "video"
+        src: "/media/warehouse-mockup.mp4"
+        title: "Warehouse automation mockup"
+      - type: "image"
+        src: "/images/robomasters_low-angle.jpg"
+        title: "Ground robots low-angle view"
+      - type: "video"
+        src: "/media/trajectory-anim.mp4"
+        title: "Trajectory visualization"
+      - type: "image"
+        src: "/images/landing.jpg"
+        title: "Quadrotor landing sequence"
+      - type: "image"
+        src: "/images/grid-robomaster.jpg"
+        title: "Long-exposure RoboMaster grid trajectories"
+      - type: "video"
+        src: "/media/8drones_led.mp4"
+        title: "Eight drones with LED markers"
+      - type: "video"
+        src: "/media/robomasters_5min.mp4"
+        title: "RoboMasters five-minute deployment"
+      - type: "image"
+        src: "/images/12drones.jpg"
+        title: "Twelve drones formation"
+      - type: "video"
+        src: "/media/robomasters_led.mp4"
+        title: "RoboMasters LED nighttime test"
+      - type: "video"
+        src: "/media/drone_takeoff.mp4"
+        title: "Top-down takeoff sequence"
+      - type: "image"
+        src: "/images/last-mile.jpg"
+        title: "Last-mile delivery demo"
+      - type: "image"
+        src: "/images/40drones_2.jpg"
+        title: "Dense drone coordination"
+      - type: "image"
+        src: "/images/8drones_led.jpg"
+        title: "Eight-drone LED still"
+      - type: "image"
+        src: "/images/8robomasters_led.jpg"
+        title: "Eight RoboMasters LED still"
+
+  citation:
+    id: "citation"
+    title: "Citation"
+    bibtex: |
+      @article{okumura2026concrete,
+        title   = {Concrete Multi-Agent Path Planning Enabling Kinodynamically Aggressive Maneuvers},
+        author  = {Okumura, Keisuke and Yang, Guang and Gao, Zhan and Woo, Heedo and Prorok, Amanda},
+        journal = {npj Robotics},
+        year    = {2026},
+        doi     = {10.1038/s44182-026-00083-2}
+      }
+
+  contact:
+    id: "contact"
+    title: "Contact"
+    prefix: "Corresponding authors:"
+    emails:
+      - "ko393@cst.cam.ac.uk"
+      - "asp45@cst.cam.ac.uk"

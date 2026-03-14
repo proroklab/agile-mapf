@@ -1,0 +1,22 @@
+{
+  "name": "agile-mapf-project-page",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "format:staged": "pretty-quick --staged",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "astro": "^5.5.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "pretty-quick": "^4.2.2"
+  }
+}

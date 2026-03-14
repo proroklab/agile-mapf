@@ -1,0 +1,29 @@
+---
+import type { MainVideoSectionContent } from "../../types/site";
+
+interface Props {
+  id: MainVideoSectionContent["id"];
+  title: MainVideoSectionContent["title"];
+  embedUrl: string;
+}
+
+const { id, title, embedUrl } = Astro.props;
+---
+
+<section id={id} class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>{title}</h2>
+    </div>
+    <div class="youtube-embed-wrap">
+      <iframe
+        src={embedUrl}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+---
+import type { HeroContent } from "../types/site";
+
+interface Props {
+  hero: HeroContent;
+}
+
+const { hero } = Astro.props;
+---
+
+<section id="top" class="hero">
+  <div class="hero-loading" data-hero-loading-overlay role="status" aria-live="polite">
+    <div class="hero-loading-center">
+      <span class="hero-loading-label" aria-hidden="true">Coming soon</span>
+      <span class="hero-loading-spinner" aria-hidden="true"></span>
+      <span class="sr-only">Loading hero video</span>
+    </div>
+  </div>
+
+  <video
+    class="hero-video"
+    data-hero-video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source src="/media/hero-background.mp4" type="video/mp4" />
+  </video>
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content container">
+    <h1>{hero.title}</h1>
+    <p class="authors">
+      {
+        hero.authors.map((author, i) => (
+          <span class="author-item">
+            {author.url ? (
+              <a class="author-link" href={author.url} target="_blank" rel="noreferrer">
+                {author.name}
+              </a>
+            ) : (
+              author.name
+            )}
+            <sup>{author.marks}</sup>
+            {i < hero.authors.length - 1 ? ", " : ""}
+          </span>
+        ))
+      }
+    </p>
+    {hero.affiliations.map((line) => <p class="affiliations">{line}</p>)}
+    {hero.notes.length > 0 && <p class="meta-note">{hero.notes.join(" / ")}</p>}
+    {hero.venue && <p class="venue-pill">{hero.venue}</p>}
+    <div class="hero-cta">
+      {
+        hero.ctas.map((cta) => (
+          <a class={`btn ${cta.style === "solid" ? "btn-solid" : "btn-ghost"}`} href={cta.href}>
+            {cta.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const heroSection = document.querySelector(".hero");
+  const heroVideo = heroSection?.querySelector("[data-hero-video]");
+  const loadingOverlay = heroSection?.querySelector("[data-hero-loading-overlay]");
+
+  const markHeroReady = () => {
+    heroSection?.classList.add("is-ready");
+    loadingOverlay?.setAttribute("aria-hidden", "true");
+  };
+
+  if (heroVideo instanceof HTMLVideoElement) {
+    if (heroVideo.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      markHeroReady();
+    } else {
+      heroVideo.addEventListener("loadeddata", markHeroReady, { once: true });
+      heroVideo.addEventListener("canplay", markHeroReady, { once: true });
+      heroVideo.addEventListener("error", markHeroReady, { once: true });
+      window.setTimeout(markHeroReady, 5000);
+    }
+  } else {
+    markHeroReady();
+  }
+</script>

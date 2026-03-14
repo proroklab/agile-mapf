@@ -1,0 +1,29 @@
+---
+import type { ContactSectionContent } from "../../types/site";
+
+interface Props {
+  id: ContactSectionContent["id"];
+  title: ContactSectionContent["title"];
+  prefix: ContactSectionContent["prefix"];
+  emails: ContactSectionContent["emails"];
+}
+
+const { id, title, prefix, emails } = Astro.props;
+---
+
+<section id={id} class="section container">
+  <div class="section-head">
+    <h2>{title}</h2>
+    <p>
+      {prefix}{" "}
+      {
+        emails.map((email, index) => (
+          <>
+            <a href={`mailto:${email}`}>{email}</a>
+            {index < emails.length - 1 ? ", " : ""}
+          </>
+        ))
+      }
+    </p>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+import type { MethodSectionContent } from "../../types/site";
+
+interface Props {
+  id: MethodSectionContent["id"];
+  title: MethodSectionContent["title"];
+  video?: MethodSectionContent["video"];
+}
+
+const { id, title, video } = Astro.props;
+---
+
+<section id={id} class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>{title}</h2>
+    </div>
+    {
+      video?.src && (
+        <figure class="method-video-wrap">
+          <video autoplay loop muted playsinline preload="metadata" title={video.title} aria-label={video.title}>
+            <source src={video.src} type="video/mp4" />
+          </video>
+          {video.caption && <figcaption>{video.caption}</figcaption>}
+        </figure>
+      )
+    }
+  </div>
+</section>

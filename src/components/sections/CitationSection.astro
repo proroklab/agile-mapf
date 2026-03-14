@@ -1,0 +1,20 @@
+---
+import type { CitationSectionContent } from "../../types/site";
+
+interface Props {
+  id: CitationSectionContent["id"];
+  title: CitationSectionContent["title"];
+  bibtex: CitationSectionContent["bibtex"];
+}
+
+const { id, title, bibtex } = Astro.props;
+---
+
+<section id={id} class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>{title}</h2>
+    </div>
+    <pre class="bibtex">{bibtex}</pre>
+  </div>
+</section>

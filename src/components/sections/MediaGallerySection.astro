@@ -1,0 +1,144 @@
+---
+import type { VideosSectionContent } from "../../types/site";
+
+interface Props {
+  id: VideosSectionContent["id"];
+  title: VideosSectionContent["title"];
+  items: VideosSectionContent["items"];
+}
+
+const { id, title, items } = Astro.props;
+---
+
+<section id={id} class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>{title}</h2>
+    </div>
+  </div>
+  <div class="media-gallery">
+    {
+      items.map((galleryItem, index) => {
+        const mediaTitle = galleryItem.title ?? `Gallery media ${index + 1}`;
+        return (
+          <figure class="media-gallery-item" style={`--gallery-index: ${index};`}>
+            <div class="media-gallery-placeholder" aria-hidden="true">
+              <span>{mediaTitle}</span>
+            </div>
+            <div
+              class="media-gallery-slot"
+              data-type={galleryItem.type}
+              data-src={galleryItem.src}
+              data-title={mediaTitle}
+            ></div>
+            <noscript>
+              {
+                galleryItem.type === "video" ? (
+                  <video autoplay loop muted playsinline preload="metadata" title={mediaTitle} aria-label={mediaTitle}>
+                    <source src={galleryItem.src} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img src={galleryItem.src} alt={mediaTitle} loading="lazy" />
+                )
+              }
+            </noscript>
+          </figure>
+        );
+      })
+    }
+  </div>
+</section>
+
+<script>
+  const gallerySlots = document.querySelectorAll(".media-gallery-slot[data-src]");
+  const galleryItems = document.querySelectorAll(".media-gallery-item");
+
+  function applyGalleryAspect(galleryItem, width, height) {
+    if (!galleryItem || !width || !height) return;
+    galleryItem.style.setProperty("--media-aspect", `${width} / ${height}`);
+  }
+
+  function markGalleryItemLoaded(slot, width, height) {
+    const galleryItem = slot.parentElement;
+    if (!galleryItem) return;
+    applyGalleryAspect(galleryItem, width, height);
+    galleryItem.classList.add("is-loaded");
+  }
+
+  function createMediaElement(slot) {
+    if (slot.dataset.loaded === "true") return;
+
+    const mediaType = slot.dataset.type;
+    const sourceUrl = slot.dataset.src;
+    const mediaTitle = slot.dataset.title ?? "";
+    if (!sourceUrl || !mediaType) return;
+
+    let mediaElement;
+    if (mediaType === "video") {
+      mediaElement = document.createElement("video");
+      mediaElement.autoplay = true;
+      mediaElement.loop = true;
+      mediaElement.muted = true;
+      mediaElement.playsInline = true;
+      mediaElement.preload = "metadata";
+      mediaElement.title = mediaTitle;
+      mediaElement.setAttribute("aria-label", mediaTitle);
+
+      const source = document.createElement("source");
+      source.src = sourceUrl;
+      source.type = "video/mp4";
+      mediaElement.appendChild(source);
+    } else {
+      mediaElement = document.createElement("img");
+      mediaElement.src = sourceUrl;
+      mediaElement.alt = mediaTitle;
+      mediaElement.loading = "lazy";
+      mediaElement.decoding = "async";
+    }
+
+    if (mediaType === "video") {
+      mediaElement.addEventListener("loadedmetadata", () => {
+        markGalleryItemLoaded(slot, mediaElement.videoWidth, mediaElement.videoHeight);
+      });
+      mediaElement.addEventListener("loadeddata", () => {
+        markGalleryItemLoaded(slot, mediaElement.videoWidth, mediaElement.videoHeight);
+      });
+    } else {
+      mediaElement.addEventListener("load", () => {
+        markGalleryItemLoaded(slot, mediaElement.naturalWidth, mediaElement.naturalHeight);
+      });
+    }
+
+    slot.appendChild(mediaElement);
+    slot.dataset.loaded = "true";
+  }
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          createMediaElement(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "280px 0px" },
+    );
+    gallerySlots.forEach((slot) => observer.observe(slot));
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.14 },
+    );
+    galleryItems.forEach((item) => revealObserver.observe(item));
+  } else {
+    gallerySlots.forEach((slot) => createMediaElement(slot));
+    galleryItems.forEach((item) => item.classList.add("is-visible"));
+  }
+</script>
