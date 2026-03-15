@@ -59,9 +59,9 @@ sections:
     id: "news"
     title: "News"
     items:
-      - date: "2026-04-01"
+      - date: "2026-03-15"
         text: "The paper has been published in npj Robotics."
-        url: "https://www.nature.com/npjrobot/"
+        url: "https://www.nature.com/articles/s44182-026-00083-2"
       - date: "2025-10-26"
         text: "Featured on Fantástico (Brazil)."
         url: "https://g1.globo.com/fantastico/video/mentes-digitais-professora-brasileira-lidera-pesquisas-de-inteligencia-coletiva-no-reino-unido-14044982.ghtml"
