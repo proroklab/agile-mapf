@@ -1,5 +1,6 @@
 ---
 import type { VideosSectionContent } from "../../types/site";
+import { toPublicAssetUrl } from "../../lib/assets";
 
 interface Props {
   id: VideosSectionContent["id"];
@@ -20,27 +21,37 @@ const { id, title, items } = Astro.props;
     {
       items.map((galleryItem, index) => {
         const mediaTitle = galleryItem.title ?? `Gallery media ${index + 1}`;
+        const mediaSource = toPublicAssetUrl(galleryItem.src);
         return (
-          <figure class="media-gallery-item" style={`--gallery-index: ${index};`}>
+          <figure
+            class="media-gallery-item"
+            style={`--gallery-index: ${index};`}
+          >
             <div class="media-gallery-placeholder" aria-hidden="true">
               <span>{mediaTitle}</span>
             </div>
             <div
               class="media-gallery-slot"
               data-type={galleryItem.type}
-              data-src={galleryItem.src}
+              data-src={mediaSource}
               data-title={mediaTitle}
-            ></div>
+            />
             <noscript>
-              {
-                galleryItem.type === "video" ? (
-                  <video autoplay loop muted playsinline preload="metadata" title={mediaTitle} aria-label={mediaTitle}>
-                    <source src={galleryItem.src} type="video/mp4" />
-                  </video>
-                ) : (
-                  <img src={galleryItem.src} alt={mediaTitle} loading="lazy" />
-                )
-              }
+              {galleryItem.type === "video" ? (
+                <video
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  preload="metadata"
+                  title={mediaTitle}
+                  aria-label={mediaTitle}
+                >
+                  <source src={mediaSource} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={mediaSource} alt={mediaTitle} loading="lazy" />
+              )}
             </noscript>
           </figure>
         );
@@ -50,7 +61,9 @@ const { id, title, items } = Astro.props;
 </section>
 
 <script>
-  const gallerySlots = document.querySelectorAll(".media-gallery-slot[data-src]");
+  const gallerySlots = document.querySelectorAll(
+    ".media-gallery-slot[data-src]",
+  );
   const galleryItems = document.querySelectorAll(".media-gallery-item");
 
   function applyGalleryAspect(galleryItem, width, height) {
@@ -98,14 +111,26 @@ const { id, title, items } = Astro.props;
 
     if (mediaType === "video") {
       mediaElement.addEventListener("loadedmetadata", () => {
-        markGalleryItemLoaded(slot, mediaElement.videoWidth, mediaElement.videoHeight);
+        markGalleryItemLoaded(
+          slot,
+          mediaElement.videoWidth,
+          mediaElement.videoHeight,
+        );
       });
       mediaElement.addEventListener("loadeddata", () => {
-        markGalleryItemLoaded(slot, mediaElement.videoWidth, mediaElement.videoHeight);
+        markGalleryItemLoaded(
+          slot,
+          mediaElement.videoWidth,
+          mediaElement.videoHeight,
+        );
       });
     } else {
       mediaElement.addEventListener("load", () => {
-        markGalleryItemLoaded(slot, mediaElement.naturalWidth, mediaElement.naturalHeight);
+        markGalleryItemLoaded(
+          slot,
+          mediaElement.naturalWidth,
+          mediaElement.naturalHeight,
+        );
       });
     }
 

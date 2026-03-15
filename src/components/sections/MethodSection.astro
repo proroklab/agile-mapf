@@ -1,5 +1,6 @@
 ---
 import type { MethodSectionContent } from "../../types/site";
+import { toPublicAssetUrl } from "../../lib/assets";
 
 interface Props {
   id: MethodSectionContent["id"];
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { id, title, video } = Astro.props;
+const methodVideoUrl = video?.src ? toPublicAssetUrl(video.src) : undefined;
 ---
 
 <section id={id} class="section">
@@ -18,8 +20,16 @@ const { id, title, video } = Astro.props;
     {
       video?.src && (
         <figure class="method-video-wrap">
-          <video autoplay loop muted playsinline preload="metadata" title={video.title} aria-label={video.title}>
-            <source src={video.src} type="video/mp4" />
+          <video
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+            title={video.title}
+            aria-label={video.title}
+          >
+            <source src={methodVideoUrl} type="video/mp4" />
           </video>
           {video.caption && <figcaption>{video.caption}</figcaption>}
         </figure>
