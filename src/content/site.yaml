@@ -59,6 +59,9 @@ sections:
     id: "news"
     title: "News"
     items:
+      - date: "2026-04-08"
+        text: "Featured on the journal homepage as a hero image."
+        url: "https://www.nature.com/npjrobot/"  
       - date: "2026-03-27"
         text: "Featured on IEEE Spectrum Video Friday."
         url: "https://spectrum.ieee.org/roadrunner-bipedal-robot#41kpw6jwxty"
