@@ -59,12 +59,15 @@ sections:
     id: "news"
     title: "News"
     items:
+      - date: "2026-09-04"
+        text: "Paper Dive video is now available."
+        url: "https://www.youtube.com/watch?v=k7ExaSpARtE"
       - date: "2026-07-02"
         text: "Presentation at ICAPS-26 Previously Published Papers Track."
-        url: "https://icaps26.icaps-conference.org/"      
+        url: "https://icaps26.icaps-conference.org/"
       - date: "2026-04-08"
         text: "Featured on the journal homepage as a hero image."
-        url: "https://www.nature.com/npjrobot/"  
+        url: "https://www.nature.com/npjrobot/"
       - date: "2026-03-27"
         text: "Featured on IEEE Spectrum Video Friday."
         url: "https://spectrum.ieee.org/roadrunner-bipedal-robot#41kpw6jwxty"
@@ -84,6 +87,11 @@ sections:
     video:
       src: "/media/methodology.mp4"
       title: "Method video"
+
+  paperDive:
+    id: "paper-dive"
+    title: "Paper Dive"
+    url: "https://www.youtube.com/watch?v=k7ExaSpARtE"
 
   mainVideo:
     id: "main-video"

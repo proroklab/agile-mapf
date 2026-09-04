@@ -50,6 +50,11 @@ const sectionsSchema = z.object({
       })
       .optional(),
   }),
+  paperDive: z.object({
+    id: z.string(),
+    title: z.string(),
+    url: z.string().optional(),
+  }),
   mainVideo: z.object({
     id: z.string(),
     title: z.string(),
@@ -87,7 +92,9 @@ const site = defineCollection({
       description: z.string(),
       ogImage: z.string(),
       ogType: z.enum(["website", "article"]).default("website"),
-      twitterCard: z.enum(["summary", "summary_large_image"]).default("summary_large_image"),
+      twitterCard: z
+        .enum(["summary", "summary_large_image"])
+        .default("summary_large_image"),
     }),
     hero: heroSchema,
     sections: sectionsSchema,

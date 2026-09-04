@@ -19,10 +19,19 @@ if (!siteEntry) {
 
 const siteContent = siteEntry.data;
 const markdownProcessor = await createMarkdownProcessor();
-const abstractSectionHtml = (await markdownProcessor.render(siteContent.sections.abstract.body)).code;
+const abstractSectionHtml = (
+  await markdownProcessor.render(siteContent.sections.abstract.body)
+).code;
 
-const youtubeCtaUrl = siteContent.hero.ctas.find((cta) => cta.label.toLowerCase() === "youtube")?.href;
-const mainVideoEmbedUrl = toYouTubeEmbedUrl(siteContent.sections.mainVideo?.url ?? youtubeCtaUrl);
+const youtubeCtaUrl = siteContent.hero.ctas.find(
+  (cta) => cta.label.toLowerCase() === "youtube",
+)?.href;
+const paperDiveEmbedUrl = toYouTubeEmbedUrl(
+  siteContent.sections.paperDive?.url,
+);
+const mainVideoEmbedUrl = toYouTubeEmbedUrl(
+  siteContent.sections.mainVideo?.url ?? youtubeCtaUrl,
+);
 ---
 
 <BaseLayout
@@ -53,6 +62,16 @@ const mainVideoEmbedUrl = toYouTubeEmbedUrl(siteContent.sections.mainVideo?.url 
           id={siteContent.sections.mainVideo.id}
           title={siteContent.sections.mainVideo.title}
           embedUrl={mainVideoEmbedUrl}
+        />
+      )
+    }
+
+    {
+      paperDiveEmbedUrl && (
+        <MainVideoSection
+          id={siteContent.sections.paperDive.id}
+          title={siteContent.sections.paperDive.title}
+          embedUrl={paperDiveEmbedUrl}
         />
       )
     }
